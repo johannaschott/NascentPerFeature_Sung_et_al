@@ -1,7 +1,9 @@
 # Feature-wise estimation of nascent RNA from T-to-C transitions
 
 # Overview:
-Nascent RNA labelled with the modified nucleotide 4sU can be detected by converting 4sU chemically into cytidine.
+Nascent RNA labelled with the modified nucleotide 4-Thiouridine (4sU) can be detected by converting 4sU chemically into cytidine. Because only a minor percentage (typically 2 - 12%) of uridines is replaced by 4sU, not all nascent fragments will display a T-to-C transition. This "invisible"  
+
+# Workflow
 First, mismatches in the alignment are used to identify nascent fragments. 
 The number of T-to-C transitions need to be counted for each read from the read sequence, the CIGAR string and the MD tag.
 The number of transitions per number of aligning Ts in the reference is added up at the gene-level (or any other feature of interest). 
