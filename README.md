@@ -11,7 +11,7 @@ In addition, non-nascent fragments will show a minor rate of T-to-C transitions 
 
 In <Title of mansucript> (ref.), we estimated these parameters separately for intronic and spliced fragments as well as for regulatory groups of genes.  
 
-### Steps
+  ### Steps
 ..* Alignment to the genome using STAR (ref)
 ..* Identification of SNPs (from an external set of sequences; theoretically, this can be achieved from the same data, because SNPs should lead to a much higher T-to-C transition rate than 4sU incorporation)
 ..* Removal of reads that overlap putative SNPs
