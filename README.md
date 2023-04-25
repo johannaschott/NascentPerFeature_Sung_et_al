@@ -11,17 +11,17 @@ In addition, non-nascent fragments will show a minor rate of T-to-C transitions 
 
 In <Title of mansucript> (ref.), we estimated these parameters separately for intronic and spliced fragments as well as for regulatory groups of genes.  
 
-  ### Steps
-..* Alignment to the genome using STAR (ref)
-..* Identification of SNPs (from an external set of sequences; theoretically, this can be achieved from the same data, because SNPs should lead to a much higher T-to-C transition rate than 4sU incorporation)
-..* Removal of reads that overlap putative SNPs
-..* Identification and annotation of intronic and exon-exon junction reads with featureCounts (ref)
-..* Feature-wise counting of T-to-C transitions (i.e. at the gene-level)
-..* Estimation of parameters (transition probability and proportion of nascent reads, background transition rate within non-nascent reads) for groups of genes using non-linear regression in R 
+### Steps
+* Alignment to the genome using STAR (ref)
+* Identification of SNPs (from an external set of sequences; theoretically, this can be achieved from the same data, because SNPs should lead to a much higher T-to-C transition rate than 4sU incorporation)
+* Removal of reads that overlap putative SNPs
+* Identification and annotation of intronic and exon-exon junction reads with featureCounts (ref)
+* Feature-wise counting of T-to-C transitions (i.e. at the gene-level)
+* Estimation of parameters (transition probability and proportion of nascent reads, background transition rate within non-nascent reads) for groups of genes using non-linear regression in R 
 
 ### Tools
 In <Title of mansucript> (ref.), we used the following tools:
-..* STAR v2.5.3a
-..* samtools v???
-..* featureCounts v???
-..* R v4.0.5
+* STAR v2.5.3a
+* samtools v???
+* featureCounts v???
+* R v4.0.5
