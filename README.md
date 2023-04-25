@@ -1,6 +1,7 @@
-# Feature-wise estimation of nascent RNA from T-to-C transitions
+Feature-wise estimation of nascent RNA from T-to-C transitions
+--------------------------------------------------------------
 
-## Overview:
+### Overview:
 Nascent RNA labelled with the modified nucleotide 4-Thiouridine (4sU) can be detected by converting 4sU chemically into cytidine. Because only a minor percentage (typically 2 - 12%) of uridines is replaced by 4sU, not all nascent fragments will display a T-to-C transition, even though the efficiency of the conversion is nearly complete. The size of this "invisible" nascent fraction depends on the incorporation rate and the number of Us per fragment. For an incorporation rate of 2% and 10 Us per fragment, ? % of fragments will not show any T-to-C transitions. For an incorporation rate of 10% and 40 Us, only ? % of reads will not show any transitions.
 
 Figure
