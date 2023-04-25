@@ -5,7 +5,7 @@ Nascent RNA labelled with the modified nucleotide 4-Thiouridine (4sU) can be det
 
 ![binom_examples](https://user-images.githubusercontent.com/37538623/234335505-d2fdf8fd-bf48-4cb8-ab1b-6dab904b6177.png)
 
-In addition, non-nascent fragments will show a minor rate of T-to-C transitions due to errors during reverse transcription or sequencing ($p_{bg}$), which also contribute to the observed distribution of T-to-C transition counts. Therefore, the proportion of nascent reads ($\pi$) can be estimated from a binomial mixture model:
+In addition, non-nascent fragments will show a minor rate of T-to-C transitions due to errors during reverse transcription or sequencing ($p_{bg}$), which also contribute to the observed distribution of T-to-C transition counts. Therefore, the proportion of nascent reads ($\pi$) can be estimated from a binomial mixture model (ref):
 
 ![binom_examples2](https://user-images.githubusercontent.com/37538623/234335531-b2e5143c-d8ca-4aa8-86c2-41305429fe10.png)
 
@@ -25,3 +25,5 @@ In <Title of mansucript> (ref.), we used the following tools:
 * samtools v???
 * featureCounts v???
 * R v4.0.5
+  
+### References
