@@ -3,7 +3,7 @@
 ### Overview:
 Nascent RNA labelled with the modified nucleotide 4-Thiouridine (4sU) can be detected by converting 4sU chemically into cytidine. Because only a minor percentage (typically 2 - 12%) of uridines is replaced by 4sU, not all nascent fragments will display a T-to-C transition, although the conversion is nearly complete. The size of this "invisible" nascent fraction depends on the incorporation rate and the number of Us per fragment. For an incorporation rate of 2% and 10 Us per fragment (p = 0.02, n = 10), ~ 82% of fragments will not show any T-to-C transitions. For an incorporation rate of 10% and 40 Us (p = 0.1, n = 40), only ~1.5% of reads will not show any transitions.
 
-![binom_examples](https://user-images.githubusercontent.com/37538623/234312680-53e2f763-d91b-424a-a462-334865e690f7.png)
+![binom_examples](https://user-images.githubusercontent.com/37538623/234318350-7fc65b2b-6075-4c68-85bd-00a0c45fcc16.png)
 
 In addition, non-nascent fragments will show a minor rate of T-to-C transitions due to errors during reverse transcription or sequencing, which also contribute to the observed distribution of T-to-C transition counts. Therefore, the proportion of nascent reads can be estimated from a binomial mixture model:
 
