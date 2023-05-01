@@ -22,8 +22,13 @@ In <Title of mansucript>, we estimated these parameters separately for intronic 
 ### Tools
 In <Title of mansucript>, we used the following tools:
 * STAR v2.5.3a
-* samtools v???
-* featureCounts v???
+* samtools v1.7
+* featureCounts v1.5.2
 * R v4.0.5
   
 ### References
+(1) Schott, J., S. Reitter, D. Lindner, J. Grosser, M. Bruer, A. Shenoy, T. Geiger, A. Mathes, G. Dobreva, and G. Stoecklin. 2021. 'Nascent Ribo-Seq measures ribosomal loading time and reveals kinetic impact on ribosome density', Nat Methods, 18: 1068-74.
+(2) Jurges, C., L. Dolken, and F. Erhard. 2018. 'Dissecting newly transcribed and old RNA using GRAND-SLAM', Bioinformatics, 34: i218-i26.
+(3) unpublished manuscript
+(4) Dobin, A., C. A. Davis, F. Schlesinger, J. Drenkow, C. Zaleski, S. Jha, P. Batut, M. Chaisson, and T. R. Gingeras. 2013. 'STAR: ultrafast universal RNA-seq aligner', Bioinformatics, 29: 15-21.
+(5) Liao, Y., G. K. Smyth, and W. Shi. 2014. 'featureCounts: an efficient general purpose program for assigning sequence reads to genomic features', Bioinformatics, 30: 923-30.
