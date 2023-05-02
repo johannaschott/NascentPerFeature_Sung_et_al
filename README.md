@@ -9,7 +9,7 @@ In addition, non-nascent fragments will show a minor rate of T-to-C transitions 
 
 ![binom2](https://user-images.githubusercontent.com/37538623/235511542-efab4876-92d1-4f09-a68f-bdc90050d99f.png)
 
-In <Title of mansucript>, we estimated these parameters separately for intronic and spliced fragments as well as for regulatory groups of genes.<sup>3</sup>  
+In <Title of mansucript>, we estimated these parameters separately for intronic and spliced fragments as well as for regulatory groups of genesin order to draw conclusions about splicing efficiency within nascent and pre-existing RNA during ribotoxic stress.<sup>3</sup>  
 
 ### Steps
 * Alignment to the genome using STAR<sup>4</sup>
@@ -25,6 +25,11 @@ In <Title of mansucript>, we used the following tools:
 * samtools v1.7
 * featureCounts v1.5.2
 * R v4.0.5
+  
+### Preparation
+If you want to recapitulate the full analysis presented in Sung et al. 2023, you have to download the following additional files:
+* Fastq files from GEO (GSE231520) (place them into the directory ./raw_data)
+* Genome Reference Consortium Human Build 38 patch release 10 (GRCh38.p10), as a fasta file in ./genome_files/GRCh38.p10.genome.fa
   
 ### References
 1. Schott, J., S. Reitter, D. Lindner, J. Grosser, M. Bruer, A. Shenoy, T. Geiger, A. Mathes, G. Dobreva, and G. Stoecklin. 2021. 'Nascent Ribo-Seq measures ribosomal loading time and reveals kinetic impact on ribosome density', Nat Methods, 18: 1068-74.
