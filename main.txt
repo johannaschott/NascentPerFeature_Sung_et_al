@@ -1,0 +1,106 @@
+# STEP 1: Putative SNPs were detected from the DMSO samples of the experiment deposited as GSE18144.
+# A bed file with the identified SNPs is also available as ./genome_files/own_SNPs.bed.
+
+mkdir ./SNPs
+
+# create mpileup of all files and pipe into perl script to count SNPs
+for a in *bam; do echo $a >>./SNPs/list_of_bam.txt; done;
+samtools mpileup -b ./SNPs/list_of_bam.txt -f ./genome_files/GRCh38.p10.genome.ERCC.fa | perl ./perl/count_SNPs_v2.pl >>./SNPs/mpileup_all_SNPs.txt
+
+# convert SNPs into bed 
+paste <(cut ./SNPs/mpileup_all_SNPs.txt -f1 -d':') <(cut ./SNPs/mpileup_all_SNPs.txt -f2 -d':' | cut -f1 -d'-') <(cut ./SNPs/mpileup_all_SNPs.txt -f2 -d':' | cut -f1 -d'-') >./genome_files/own_SNPs.bed
+
+
+# STEP 2: create STAR index for human genome:
+mkdir ref
+STAR --runMode genomeGenerate --genomeDir ./genome_files --genomeFastaFiles ./genome_files/GRCh38.p10.genome.ERCC.fa
+
+# STEP 3: align to human genome using STAR:
+# First, the fastq files have to be deposited in the directory ./raw_data. 
+# The original sequencing files of this study can be retrieved from GEO under the accession number GSExxx.
+# For 150 nt long reads (30 min 4sU), 10 mismatches were allowed (--outFilterMismatchNmax 10).
+# For 80 nt long reads (120 min 4sU), 5 mismatches were allowed (--outFilterMismatchNmax 5).
+
+mkdir STAR_alignment
+
+for a in ./raw_data/*
+do
+	gunzip -c $a |\
+	STAR   --genomeDir ./genome_files   \
+	--sjdbGTFfile gencode.v27.annotation.ERCC.gtf \
+	--readFilesIn /dev/stdin   \
+	--outFileNamePrefix ./STAR_alignment/$(basename $a)  \
+	--outSAMtype BAM SortedByCoordinate \
+	--outSAMattributes All      --outFilterMultimapNmax 1   \
+	--outFilterMultimapScoreRange 1   --outFilterMatchNmin 30   \
+	--outFilterMismatchNmax 10   --outFilterIntronMotifs RemoveNoncanonical   \
+	--seedPerReadNmax 40000   --seedMultimapNmax 250000   \
+	--alignIntronMax 40000   --alignSJoverhangMin 16   \
+	--alignEndsType Local   --chimSegmentMin 40   --chimJunctionOverhangMin 40
+done
+
+# STEP 4: Remove reads that overlap putative SNPs
+
+mkdir ./noSNPs
+
+for a in ./STAR_alignment/*fastq.gzAligned.sortedByCoord.out.bam
+do
+	samtools view -h -b \
+	-U ./noSNPs/$(basename $a .bam)_noSNPs.bam \
+	-L ./genome_files/own_SNPs.bed $a >rest.bam
+done 
+rm rest.bam
+
+
+# STEP 5: Identify and annotate exon-exon junction reads:
+mkdir spliced
+for a in ./noSNPs/*bam
+do 
+	samtools view -h $a |\
+	perl ./perl/spliced_reads.pl |\
+	samtools view -Sb - >./spliced/$(basename $a .bam)_spliced.bam
+done
+
+for a in ./spliced/*bam
+do 
+	featureCounts -s 2 -g "gene_id" -t "exon" --fracOverlap 1 \
+	-a gencode.v27.annotation.ERCC.gtf \
+	-o ./spliced/$(basename $a .bam) -R $a
+done
+
+
+# STEP 6: Annotate intronic reads:
+mkdir intronic
+
+# assign reads with featureCounts and obtain information on each read with -R
+for a in ./noSNPs/*bam; do featureCounts -s 2 -g "gene_id" -t "intron" --fracOverlap 1 -a gencode.v27.annotation.ERCC.intronic_only.gtf -o ./intronic/$(basename $a .bam) -R $a; done;
+
+
+# STEP 7: Count transitions gene-wise:
+# The perl script count_transitions_per_feature.pl takes the following arguments:
+# ARG1: Field of bam file that contains the MD tag
+# ARG2: Path to the .featureCounts file with the annotations of alignments 
+# ARG3: Nucleotide that is converted (target nucleotide)
+# ARG4: Nucleotide into which the target nucleotide is converted
+# ARG5: Strandedness of the library (reverse or forward)
+# ARG6: Reads with up to how many matching Ts in the reference should be considered?
+# ARG7: Up to how many transitions should be counted?
+
+# for intronic reads:
+mkdir ./intronic/counts
+
+for a in ./noSNPs/*bam
+do
+	samtools view $a  |\
+	perl ./perl/count_transitions_per_feature.pl 17 ./intronic/$(basename $a).featureCounts T C reverse 50 10 >./intronic/counts/$(basename $a)_counts.txt
+done
+
+# for spliced reads:
+mkdir ./spliced/counts
+
+for a in ./spliced/*bam
+do
+	samtools view $a  |\
+	perl ./perl/count_transitions_per_feature.pl 17 ./spliced/$(basename $a).featureCounts T C reverse 50 10 >./spliced/counts/$(basename $a)_counts.txt
+done
+
