@@ -1,25 +1,25 @@
-# STEP 1: Putative SNPs were detected from the DMSO samples of the experiment deposited as GSE18144.
+# STEP 1: Putative SNPs were detected from the DMSO samples of the experiment deposited as GSE181446.
 # A bed file with the identified SNPs is also available as ./genome_files/own_SNPs.bed.
 
-mkdir ./SNPs
+mkdir ./GSE181446/SNPs
 
 # create mpileup of all files and pipe into perl script to count SNPs
-for a in *bam; do echo $a >>./SNPs/list_of_bam.txt; done;
-samtools mpileup -b ./SNPs/list_of_bam.txt -f ./genome_files/GRCh38.p10.genome.ERCC.fa | perl ./perl/count_SNPs_v2.pl >>./SNPs/mpileup_all_SNPs.txt
+for a in *bam; do echo $a >>./GSE181446/SNPs/list_of_bam.txt; done;
+samtools mpileup -b ./GSE181446/SNPs/list_of_bam.txt -f ./genome_files/GRCh38.p10.genome.fa | perl ./perl/count_SNPs_v2.pl >>./GSE181446/SNPs/mpileup_all_SNPs.txt
 
 # convert SNPs into bed 
-paste <(cut ./SNPs/mpileup_all_SNPs.txt -f1 -d':') <(cut ./SNPs/mpileup_all_SNPs.txt -f2 -d':' | cut -f1 -d'-') <(cut ./SNPs/mpileup_all_SNPs.txt -f2 -d':' | cut -f1 -d'-') >./genome_files/own_SNPs.bed
+paste <(cut ./GSE181446/SNPs/mpileup_all_SNPs.txt -f1 -d':') <(cut ./GSE181446/SNPs/mpileup_all_SNPs.txt -f2 -d':' | cut -f1 -d'-') <(cut ./GSE181446/SNPs/mpileup_all_SNPs.txt -f2 -d':' | cut -f1 -d'-') >./genome_files/own_SNPs.bed
 
 
 # STEP 2: create STAR index for human genome:
 mkdir ref
-STAR --runMode genomeGenerate --genomeDir ./genome_files --genomeFastaFiles ./genome_files/GRCh38.p10.genome.ERCC.fa
+STAR --runMode genomeGenerate --genomeDir ./genome_files --genomeFastaFiles ./genome_files/GRCh38.p10.genome.fa
 
 # STEP 3: align to human genome using STAR:
 # First, the fastq files have to be deposited in the directory ./raw_data. 
-# The original sequencing files of this study can be retrieved from GEO under the accession number GSExxx.
-# For 150 nt long reads (30 min 4sU), 10 mismatches were allowed (--outFilterMismatchNmax 10).
-# For 80 nt long reads (120 min 4sU), 5 mismatches were allowed (--outFilterMismatchNmax 5).
+# The original sequencing files of this study can be retrieved from GEO under the accession number GSE231520.
+# For 150 nt long reads (30 min 4sU, GSM7287615, GSM7287616, GSM7287619 and GSM7287620), 10 mismatches were allowed (--outFilterMismatchNmax 10).
+# For 80 nt long reads (120 min 4sU, GSM7287613, GSM7287614, GSM7287617 and GSM7287618), 5 mismatches were allowed (--outFilterMismatchNmax 5).
 
 mkdir STAR_alignment
 
@@ -27,7 +27,7 @@ for a in ./raw_data/*
 do
 	gunzip -c $a |\
 	STAR   --genomeDir ./genome_files   \
-	--sjdbGTFfile gencode.v27.annotation.ERCC.gtf \
+	--sjdbGTFfile gencode.v27.annotation.gtf \
 	--readFilesIn /dev/stdin   \
 	--outFileNamePrefix ./STAR_alignment/$(basename $a)  \
 	--outSAMtype BAM SortedByCoordinate \
@@ -73,7 +73,7 @@ done
 mkdir intronic
 
 # assign reads with featureCounts and obtain information on each read with -R
-for a in ./noSNPs/*bam; do featureCounts -s 2 -g "gene_id" -t "intron" --fracOverlap 1 -a gencode.v27.annotation.ERCC.intronic_only.gtf -o ./intronic/$(basename $a .bam) -R $a; done;
+for a in ./noSNPs/*bam; do featureCounts -s 2 -g "gene_id" -t "intron" --fracOverlap 1 -a gencode.v27.annotation.intronic_only.gtf -o ./intronic/$(basename $a .bam) -R $a; done;
 
 
 # STEP 7: Count transitions gene-wise:
