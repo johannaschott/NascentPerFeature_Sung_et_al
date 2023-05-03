@@ -1,15 +1,17 @@
 ## Feature-wise estimation of nascent RNA from T-to-C transitions
 
+This repository provides access to the custom code used in <Title of manuscript> for the analysis of splicing efficiency within nascent and pre-existing RNA during ribotoxic stress.<sup>1</sup>
+
 ### Overview:
-Nascent RNA labelled with the modified nucleotide 4-Thiouridine (4sU) can be detected by converting 4sU chemically into cytidine.<sup>1</sup> Because only a minor percentage (typically 2 - 12%) of uridines is replaced by 4sU, not all nascent fragments will display a T-to-C transition, although the conversion is nearly complete. The size of this "invisible" nascent fraction depends on the incorporation rate and the number of Us per fragment. For an incorporation rate of 2% and 10 Us per fragment (p = 0.02, n = 10), ~ 82% of fragments will not show any T-to-C transitions. For an incorporation rate of 10% and 40 Us (p = 0.1, n = 40), only ~1.5% of reads will not show any transitions.
+Nascent RNA labelled with the modified nucleotide 4-Thiouridine (4sU) can be detected by converting 4sU chemically into cytidine.<sup>2</sup> Because only a minor percentage (typically 2 - 12%) of uridines is replaced by 4sU, not all nascent fragments will display a T-to-C transition, although the conversion is nearly complete. The size of this "invisible" nascent fraction depends on the incorporation rate and the number of Us per fragment. For an incorporation rate of 2% and 10 Us per fragment (p = 0.02, n = 10), ~ 82% of fragments will not show any T-to-C transitions. For an incorporation rate of 10% and 40 Us (p = 0.1, n = 40), only ~1.5% of reads will not show any transitions.
 
 ![binom1](https://user-images.githubusercontent.com/37538623/235510082-b82756c5-270f-4349-b904-18f66d959d61.png)
 
-In addition, non-nascent fragments will show a minor rate of T-to-C transitions due to errors during reverse transcription or sequencing ($p_{bg}$), which also contribute to the observed distribution of T-to-C transition counts. Therefore, the proportion of nascent reads ($\pi$) can be estimated from a binomial mixture model<sup>2</sup>:
+In addition, non-nascent fragments will show a minor rate of T-to-C transitions due to errors during reverse transcription or sequencing ($p_{bg}$), which also contribute to the observed distribution of T-to-C transition counts. Therefore, the proportion of nascent reads ($\pi$) can be estimated from a binomial mixture model<sup>3</sup>:
 
 ![binom2](https://user-images.githubusercontent.com/37538623/235511542-efab4876-92d1-4f09-a68f-bdc90050d99f.png)
 
-In <Title of mansucript>, we estimated these parameters separately for intronic and spliced fragments as well as for regulatory groups of genesin order to draw conclusions about splicing efficiency within nascent and pre-existing RNA during ribotoxic stress.<sup>3</sup>  
+In <Title of mansucript>, we estimated these parameters separately for intronic and spliced fragments as well as for regulatory groups of genesin order to draw conclusions about splicing efficiency within nascent and pre-existing RNA during ribotoxic stress.<sup>1</sup>  
 
 ### Steps
 * Alignment to the genome using STAR<sup>4</sup>
@@ -30,10 +32,11 @@ In <Title of mansucript>, we used the following tools:
 If you want to recapitulate the full analysis presented in Sung et al. 2023, you have to download the following additional files:
 * Fastq files from GEO (GSE231520) (place them into the directory ./raw_data)
 * Genome Reference Consortium Human Build 38 patch release 10 (GRCh38.p10), as a fasta file in ./genome_files/GRCh38.p10.genome.fa
+In addition, the gtf files provided in ./genome_files have to be de-compressed.
   
 ### References
-1. Schott, J., S. Reitter, D. Lindner, J. Grosser, M. Bruer, A. Shenoy, T. Geiger, A. Mathes, G. Dobreva, and G. Stoecklin. 2021. 'Nascent Ribo-Seq measures ribosomal loading time and reveals kinetic impact on ribosome density', Nat Methods, 18: 1068-74.
-2. Jurges, C., L. Dolken, and F. Erhard. 2018. 'Dissecting newly transcribed and old RNA using GRAND-SLAM', Bioinformatics, 34: i218-i26.
-3. unpublished manuscript
+1. unpublished manuscript
+2. Schott, J., S. Reitter, D. Lindner, J. Grosser, M. Bruer, A. Shenoy, T. Geiger, A. Mathes, G. Dobreva, and G. Stoecklin. 2021. 'Nascent Ribo-Seq measures ribosomal loading time and reveals kinetic impact on ribosome density', Nat Methods, 18: 1068-74.
+3. Jurges, C., L. Dolken, and F. Erhard. 2018. 'Dissecting newly transcribed and old RNA using GRAND-SLAM', Bioinformatics, 34: i218-i26.
 4. Dobin, A., C. A. Davis, F. Schlesinger, J. Drenkow, C. Zaleski, S. Jha, P. Batut, M. Chaisson, and T. R. Gingeras. 2013. 'STAR: ultrafast universal RNA-seq aligner', Bioinformatics, 29: 15-21.
 5. Liao, Y., G. K. Smyth, and W. Shi. 2014. 'featureCounts: an efficient general purpose program for assigning sequence reads to genomic features', Bioinformatics, 30: 923-30.
