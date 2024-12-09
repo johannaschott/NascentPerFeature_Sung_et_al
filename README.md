@@ -11,7 +11,7 @@ In addition, non-nascent fragments will show a minor rate of T-to-C transitions 
 
 ![binom2](https://user-images.githubusercontent.com/37538623/235511542-efab4876-92d1-4f09-a68f-bdc90050d99f.png)
 
-In <Title of mansucript>, we estimated these parameters separately for intronic and spliced fragments as well as for regulatory groups of genes in order to draw conclusions about splicing efficiency within nascent and pre-existing RNA during ribotoxic stress.<sup>1</sup>  
+In "Stress-induced nuclear speckle reorganization is linked to activation of immediate early gene splicing", we estimated these parameters separately for intronic and spliced fragments as well as for regulatory groups of genes in order to draw conclusions about splicing efficiency within nascent and pre-existing RNA during ribotoxic stress.<sup>1</sup>  
 
 ### Steps
 * Alignment to the genome using STAR<sup>4</sup>
